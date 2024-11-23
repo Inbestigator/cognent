@@ -26,7 +26,7 @@ export default async function Pads() {
           <Link href={`/p/${pad.id}`} key={pad.id} passHref>
             <div className="flex items-center justify-between border-b p-4 transition-colors hover:bg-muted/50">
               <div className="font-medium">{pad.name}</div>
-              <div>{pad.updatedAt.toLocaleDateString()}</div>
+              {pad.updatedAt.toLocaleDateString()}
             </div>
           </Link>
         ))}
