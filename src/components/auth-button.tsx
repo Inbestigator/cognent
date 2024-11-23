@@ -1,9 +1,11 @@
 import { signIn, signOut } from "@/server/auth";
-import { Button } from "./ui/button";
+import { Button, type ButtonProps } from "./ui/button";
+import { User, LogOut } from "lucide-react";
 
 export default function AuthButton({
   shouldLogout,
-}: {
+  ...props
+}: ButtonProps & {
   shouldLogout?: boolean;
 }) {
   return (
@@ -14,7 +16,15 @@ export default function AuthButton({
         else await signIn("github");
       }}
     >
-      <Button type="submit">Sign {shouldLogout ? "out" : "in"}</Button>
+      <Button
+        variant="ghost"
+        size="icon"
+        title={`Sign ${shouldLogout ? "out" : "in"}`}
+        type="submit"
+        {...props}
+      >
+        {props.children ?? (shouldLogout ? <LogOut /> : <User />)}
+      </Button>
     </form>
   );
 }

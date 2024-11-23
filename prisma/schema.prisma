@@ -64,6 +64,7 @@ model VerificationToken {
 model Pad {
     id        String   @id @default(nanoid(7))
     name      String
+    content   String   @default("{\"type\":\"doc\",\"content\":[]}")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
