@@ -68,11 +68,7 @@ export default function Editor({
           </div>
         </>
       )}
-      {readonly && (
-        <div className="w-full text-5xl font-extrabold focus:outline-none">
-          {name}
-        </div>
-      )}
+      {readonly && <h1 className="text-5xl font-extrabold">{name}</h1>}
       <div className="relative">
         <EditorRoot>
           <EditorContent
