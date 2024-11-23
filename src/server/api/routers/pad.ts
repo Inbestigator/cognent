@@ -47,7 +47,7 @@ export const padRouter = createTRPCRouter({
   getPads: protectedProcedure.query(async ({ ctx }) => {
     return ctx.db.pad.findMany({
       where: { createdBy: { id: ctx.session.user.id } },
-      orderBy: { createdAt: "desc" },
+      orderBy: { updatedAt: "desc" },
     });
   }),
 
