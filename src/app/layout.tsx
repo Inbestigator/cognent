@@ -8,7 +8,7 @@ import Providers from "./providers";
 import SiteHeader from "@/components/site-header";
 
 export const metadata: Metadata = {
-  title: "Padder",
+  title: "Cognent",
   description: "A powerful note-taking tool.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

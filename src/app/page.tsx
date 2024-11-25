@@ -26,7 +26,7 @@ export default async function Home() {
           Your thoughts, organized.
         </h1>
         <p className="max-w-2xl leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-          Padder is a powerful note-taking and knowledge management tool that
+          Cognent is a powerful note-taking and knowledge management tool that
           helps you organize your thoughts, collaborate with others, and stay
           productive.
         </p>
@@ -38,7 +38,7 @@ export default async function Home() {
             </button>
           </AuthButton>
           <Button asChild size="lg" variant="outline">
-            <Link href="https://github.com/inbestigator/padder">
+            <Link href="https://github.com/inbestigator/cognent">
               <Github className="mr-1" />
               GitHub
             </Link>
@@ -112,7 +112,7 @@ export default async function Home() {
               </Link>
               . The source code is available on{" "}
               <Link
-                href="https://github.com/inbestigator/padder"
+                href="https://github.com/inbestigator/cognent"
                 target="_blank"
                 rel="noreferrer"
                 className="font-medium underline underline-offset-4"
