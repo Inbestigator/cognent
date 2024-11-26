@@ -88,11 +88,15 @@ export default function Editor({
             }}
           />
         </EditorRoot>
-        {content.content?.length === 0 && (
-          <div className="prose-headings:font-title font-default prose prose-lg absolute top-0 -z-10 animate-in fade-in-0 dark:prose-invert">
-            <p className="text-muted-foreground">Start typing...</p>
-          </div>
-        )}
+        {(content.content?.length === 0 ||
+          (content.content?.length === 1 &&
+            content.content[0]?.type === "paragraph" &&
+            !content.content[0].content)) &&
+          !isReadonly && (
+            <div className="prose-headings:font-title font-default prose prose-lg absolute top-0 -z-10 animate-in fade-in-0 dark:prose-invert">
+              <p className="text-muted-foreground">Start typing...</p>
+            </div>
+          )}
       </div>
     </div>
   );
