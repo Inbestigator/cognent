@@ -1,13 +1,6 @@
 import Link from "next/link";
 import { Github, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Pads from "./pads/page";
 import { auth } from "@/server/auth";
 import AuthButton from "@/components/auth-button";
