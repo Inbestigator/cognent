@@ -1,3 +1,5 @@
+"use client";
+
 import { Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
@@ -14,6 +16,7 @@ export default function DeleteButton({ id }: { id: string }) {
 
   return (
     <Button
+      title="Delete Pad"
       onClick={() => {
         if (confirm("Are you sure you want to delete this pad?")) {
           deletePad.mutate(id);
@@ -23,7 +26,7 @@ export default function DeleteButton({ id }: { id: string }) {
       variant="destructive"
       size="icon"
     >
-      <Trash2 className="h-4 w-4" />
+      <Trash2 className="size-4" />
     </Button>
   );
 }

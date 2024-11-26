@@ -48,12 +48,20 @@ export const padRouter = createTRPCRouter({
     return ctx.db.pad.findMany({
       where: { createdBy: { id: ctx.session.user.id } },
       orderBy: { updatedAt: "desc" },
+      cacheStrategy: {
+        ttl: 120,
+        swr: 120,
+      },
     });
   }),
 
   getPad: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return ctx.db.pad.findFirst({
       where: { id: input },
+      cacheStrategy: {
+        ttl: 5,
+        swr: 5,
+      },
     });
   }),
 });

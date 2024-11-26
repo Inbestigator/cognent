@@ -7,17 +7,17 @@ import { useState } from "react";
 import { api } from "@/trpc/react";
 import type { Pad } from "@prisma/client";
 import { useDebouncedCallback } from "use-debounce";
-import DeleteButton from "../delete-button";
 import { Badge } from "../ui/badge";
+import SideTools from "./sidetools";
 
 const extensions = [...defaultExtensions];
 
 export default function Editor({
   pad,
-  readonly,
+  isReadonly,
 }: {
   pad: Pad;
-  readonly?: boolean;
+  isReadonly: boolean;
 }) {
   const [saveStatus, setSaveStatus] = useState("Saved");
   const utils = api.useUtils();
@@ -43,36 +43,32 @@ export default function Editor({
 
   return (
     <div className="flex flex-col gap-2">
-      {!readonly && (
+      <SideTools pad={pad} isReadonly={isReadonly} />
+      {!isReadonly && (
         <>
           <Badge variant="secondary" className="w-fit rounded-lg">
             {saveStatus}
           </Badge>
-          <div className="group relative">
-            <input
-              type="text"
-              placeholder="Title"
-              value={name}
-              className="w-full text-5xl font-extrabold focus:outline-none"
-              onChange={(e) => {
-                setName(e.target.value);
-                void debouncedUpdate();
-                setSaveStatus("Unsaved");
-              }}
-              minLength={1}
-              maxLength={32}
-            />
-            <div className="absolute right-0 top-0 flex h-full items-center gap-2 opacity-0 transition-all group-hover:translate-x-full group-hover:opacity-100">
-              <DeleteButton id={pad.id} />
-            </div>
-          </div>
+          <input
+            type="text"
+            placeholder="Title"
+            value={name}
+            className="w-full text-5xl font-extrabold focus:outline-none"
+            onChange={(e) => {
+              setName(e.target.value);
+              void debouncedUpdate();
+              setSaveStatus("Unsaved");
+            }}
+            minLength={1}
+            maxLength={32}
+          />
         </>
       )}
-      {readonly && <h1 className="text-5xl font-extrabold">{name}</h1>}
+      {isReadonly && <h1 className="text-5xl font-extrabold">{name}</h1>}
       <div className="relative">
         <EditorRoot>
           <EditorContent
-            editable={!readonly}
+            editable={!isReadonly}
             immediatelyRender={false}
             extensions={extensions}
             initialContent={content}

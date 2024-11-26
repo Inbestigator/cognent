@@ -19,6 +19,10 @@ export async function generateMetadata({
     include: {
       createdBy: true,
     },
+    cacheStrategy: {
+      ttl: 120,
+      swr: 120,
+    },
   });
 
   if (!pad) {
@@ -55,7 +59,7 @@ export default async function PadPage({
   return (
     <Editor
       pad={pad}
-      readonly={!session || session.user.id !== pad.createdById}
+      isReadonly={!session || session.user.id !== pad.createdById}
     />
   );
 }
