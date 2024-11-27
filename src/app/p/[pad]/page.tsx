@@ -17,11 +17,15 @@ export async function generateMetadata({
       id: (await params).pad,
     },
     include: {
-      createdBy: true,
+      collaborators: {
+        include: {
+          user: true,
+        },
+      },
     },
     cacheStrategy: {
-      ttl: 120,
-      swr: 120,
+      ttl: 300,
+      swr: 300,
     },
   });
 
@@ -34,7 +38,9 @@ export async function generateMetadata({
       absolute: pad.name,
     },
     description: "",
-    authors: [{ name: `${pad.createdBy.name}` }],
+    authors: pad.collaborators.map((c) => ({
+      name: c.user.name?.toString(),
+    })),
     openGraph: {
       type: "article",
       publishedTime: new Date(pad.createdAt).toISOString(),
@@ -56,10 +62,15 @@ export default async function PadPage({
     notFound();
   }
 
+  const collabMember = pad.collaborators.find(
+    (c) => c.userId === session?.user.id,
+  );
+
   return (
     <Editor
       pad={pad}
-      isReadonly={!session || session.user.id !== pad.createdById}
+      isOwner={collabMember?.role === "OWNER"}
+      isReadonly={!collabMember}
     />
   );
 }

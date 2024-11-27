@@ -37,14 +37,14 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String         @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?        @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    pads          Pad[]
+    pads          Collaborator[]
 }
 
 model VerificationToken {
@@ -62,8 +62,21 @@ model Pad {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
+    collaborators Collaborator[]
 
     @@index([name])
+}
+
+model Collaborator {
+    id     String @id @default(cuid())
+    user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+    pad    Pad    @relation(fields: [padId], references: [id], onDelete: Cascade)
+    padId  String
+    role   Role   @default(EDITOR)
+}
+
+enum Role {
+    OWNER
+    EDITOR
 }

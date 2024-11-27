@@ -3,21 +3,33 @@
 import { EditorContent, EditorRoot, type JSONContent } from "novel";
 import { defaultExtensions } from "./extensions";
 import { handleCommandNavigation } from "novel/extensions";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { api } from "@/trpc/react";
-import type { Pad } from "@prisma/client";
+import type { Collaborator } from "@prisma/client";
 import { useDebouncedCallback } from "use-debounce";
 import { Badge } from "../ui/badge";
-import SideTools from "./sidetools";
+import SideTools from "../sidetools";
+import DeleteButton from "../delete-button";
+import ShareButton from "../share-button";
+import Collabs, { FallbackCollabs } from "../collabs";
 
 const extensions = [...defaultExtensions];
+
+export interface Pad {
+  id: string;
+  name: string;
+  content: string;
+  collaborators: Collaborator[];
+}
 
 export default function Editor({
   pad,
   isReadonly,
+  isOwner,
 }: {
   pad: Pad;
   isReadonly: boolean;
+  isOwner: boolean;
 }) {
   const [saveStatus, setSaveStatus] = useState("Saved");
   const utils = api.useUtils();
@@ -43,7 +55,17 @@ export default function Editor({
 
   return (
     <div className="flex flex-col gap-2">
-      <SideTools pad={pad} isReadonly={isReadonly} />
+      <SideTools>
+        {!isReadonly && isOwner && (
+          <>
+            <Suspense fallback={FallbackCollabs()}>
+              <Collabs id={pad.id} />
+            </Suspense>
+            <DeleteButton id={pad.id} />
+          </>
+        )}
+        <ShareButton {...pad} />
+      </SideTools>
       {!isReadonly && (
         <>
           <Badge variant="secondary" className="w-fit rounded-lg">

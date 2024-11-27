@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
@@ -11,6 +11,7 @@ export default function DeleteButton({ id }: { id: string }) {
   const deletePad = api.pad.delete.useMutation({
     onSuccess: async () => {
       await utils.pad.invalidate();
+      router.push("/");
     },
   });
 
@@ -20,13 +21,14 @@ export default function DeleteButton({ id }: { id: string }) {
       onClick={() => {
         if (confirm("Are you sure you want to delete this pad?")) {
           deletePad.mutate(id);
-          router.push("/");
         }
       }}
-      variant="destructive"
+      variant="ghost"
       size="icon"
+      disabled={deletePad.isPending}
+      className="hover:bg-destructive hover:text-destructive-foreground"
     >
-      <Trash2 className="size-4" />
+      {deletePad.isPending ? <Loader2 className="animate-spin" /> : <Trash2 />}
     </Button>
   );
 }

@@ -2,7 +2,7 @@
 
 import { Share } from "lucide-react";
 import { Button } from "./ui/button";
-import type { Pad } from "@prisma/client";
+import type { Pad } from "./editor/editor";
 
 export default function ShareButton(pad: Pad) {
   return (
@@ -20,10 +20,10 @@ export default function ShareButton(pad: Pad) {
           );
         }
       }}
-      variant="secondary"
+      variant="ghost"
       size="icon"
     >
-      <Share className="size-4" />
+      <Share />
     </Button>
   );
 }

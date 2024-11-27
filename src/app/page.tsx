@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Github, StickyNote } from "lucide-react";
+import { Github, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Pads from "./pads/page";
 import { auth } from "@/server/auth";
@@ -22,15 +22,13 @@ export default async function Home() {
         thoughts.
       </p>
       <div className="flex flex-wrap justify-center gap-4">
-        <AuthButton variant="default" asChild size="lg">
-          <button>
-            <StickyNote className="mr-1" />
-            Get Started
-          </button>
+        <AuthButton size="lg" variant="default">
+          <Pen />
+          Get Started
         </AuthButton>
-        <Button asChild size="lg" variant="outline">
+        <Button size="lg" variant="outline" asChild>
           <Link href="https://github.com/inbestigator/cognent">
-            <Github className="mr-1" />
+            <Github />
             GitHub
           </Link>
         </Button>
